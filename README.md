@@ -5,6 +5,87 @@ extração, normalização e persistência de dados jurídicos do Tribunal de
 Justiça do Pará [(TJPA)](https://consulta-processual-unificada-prd.tjpa.jus.br/#/consulta). O foco principal é a superação de barreiras de
 validação e a eficiência no consumo de APIs REST internas.
 
+# 🛠️ Instruções de Execução
+
+Siga o passo a passo abaixo para configurar o ambiente e executar o
+crawler de forma segura e eficiente.
+
+------------------------------------------------------------------------
+
+## 1️⃣ Preparação do Ambiente
+
+Certifique-se de ter o **Python 3.10+** instalado.\
+Recomenda-se o uso de um **ambiente virtual** para evitar conflitos de
+dependências.
+
+### 📦 Clone o repositório
+
+``` bash
+git clone git@github.com:MiMghtt/crawler_tjpa.git
+cd crawler_tjpa
+```
+
+### 🧪 Crie e ative um ambiente virtual
+
+``` bash
+python -m venv venv
+```
+
+#### ▶ Windows (PowerShell)
+
+``` powershell
+.env\ScriptsActivate
+```
+
+#### ▶ Linux / Mac
+
+``` bash
+source venv/bin/activate
+```
+
+### 📥 Instale as dependências
+
+``` bash
+pip install -r requirements.txt
+```
+
+------------------------------------------------------------------------
+
+## 2️⃣ Configuração de Parâmetros
+
+O arquivo `config.py` centraliza as variáveis de ambiente.\
+Antes de iniciar, valide os seguintes campos:
+
+``` python
+# config.py
+
+TARGET_YEAR = "2026"         # Ano de distribuição do processo
+COMARCA_CODE = "0001"        # Código da unidade judiciária (Ex: Belém)
+START_SEQUENTIAL = 800000    # Ponto de partida identificado no scouting
+DELAY_RANGE = (1, 3)         # Intervalo aleatório para evitar bloqueios (Jitter)
+```
+
+------------------------------------------------------------------------
+
+## 3️⃣ Fluxo de Operação
+
+Para iniciar a coleta em massa, execute o script principal:
+
+``` powershell
+python crawler.py
+```
+
+------------------------------------------------------------------------
+
+## ✅ Observações Importantes
+
+-   Sempre valide se o ponto inicial (`START_SEQUENTIAL`) foi
+    corretamente identificado no scouting.
+-   Ajuste o `DELAY_RANGE` conforme a sensibilidade do servidor.
+-   Monitore logs durante a execução para detectar possíveis bloqueios
+    ou alterações na API.
+
+
 ------------------------------------------------------------------------
 
 ## 📝 Descrição da Fonte e Desafios Técnicos
@@ -105,3 +186,4 @@ Para escalar o projeto e reduzir falhas recorrentes, sugere-se:
 -   **Monitoramento de Versão:** Criar um alerta para mudanças nos
     campos da API do tribunal, garantindo que o parser seja atualizado
     proativamente.
+
